@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Zomato - Mock Front Page</title>
+  <style>
+    /* Reset + basic layout */
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter, system-ui, Arial, sans-serif}
+    body{background:#fafafa;color:#222}
+    a{color:inherit;text-decoration:none}
+
+    /* Header */
+    .header{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:10}
+    .logo{display:flex;gap:10px;align-items:center;font-weight:700;color:#d32f2f}
+    .logo .dot{width:36px;height:36px;border-radius:8px;background:#d32f2f;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px}
+
+    /* Search */
+    .search{flex:1;max-width:720px;margin:0 24px}
+    .search input{width:100%;padding:12px 16px;border-radius:8px;border:1px solid #e6e6e6;background:#fff;font-size:15px}
+
+    /* Nav */
+    .nav-actions{display:flex;gap:12px;align-items:center}
+    .btn{padding:8px 12px;border-radius:8px;border:1px solid #e6e6e6;background:#fff;cursor:pointer}
+    .btn.primary{background:#d32f2f;color:#fff;border-color:#d32f2f}
+
+    /* Hero */
+    .hero{padding:28px 24px;background:linear-gradient(90deg,#fff 60%, #fff);display:flex;gap:24px;align-items:center}
+    .hero-left{flex:1}
+    .hero h1{font-size:28px;margin-bottom:8px}
+    .hero p{color:#666;margin-bottom:12px}
+
+    /* Categories */
+    .categories{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
+    .cat{background:#fff;border:1px solid #eee;padding:10px 14px;border-radius:12px;display:flex;align-items:center;gap:10px;min-width:110px;cursor:pointer}
+    .cat img{width:40px;height:40px;border-radius:8px;object-fit:cover}
+
+    /* Restaurant grid */
+    .container{max-width:1100px;margin:14px auto;padding:0 18px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+    .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 10px rgba(20,20,20,0.03);border:1px solid #f0f0f0}
+    .card .thumb{height:150px;background:linear-gradient(135deg,#ffe8e8,#ffdede);display:flex;align-items:center;justify-content:center;font-weight:700;color:#9b1f1f}
+    .card .info{padding:12px}
+    .card h3{font-size:16px;margin-bottom:6px}
+    .card .meta{color:#777;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+    .rating{background:#eefaf0;padding:6px 8px;border-radius:8px;font-weight:600;color:#1b8a3e}
+
+    /* Footer */
+    .footer{padding:24px;text-align:center;color:#666;font-size:14px}
+
+    /* Responsive tweaks */
+    @media (max-width:720px){
+      .search{margin:12px 0}
+      .hero{flex-direction:column;align-items:stretch}
+      .logo .text{display:none}
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <div class="dot">Z</div>
+      <div class="text">SimpleZomato</div>
+    </div>
+
+    <div class="search">
+      <input id="searchInput" type="search" placeholder="Search restaurants, dishes or cuisines (e.g. biryani, pizza)" />
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn">Login</button>
+      <button class="btn primary">Order Now</button>
+    </div>
+  </header>
+
+  <section class="hero container">
+    <div class="hero-left">
+      <h1>Delicious food delivered to your door</h1>
+      <p>Choose from nearby restaurants or explore cuisines and trending dishes.</p>
+
+      <div class="categories" id="categories">
+        <div class="cat" data-filter="Pizza">🍕 Pizza</div>
+        <div class="cat" data-filter="Biryani">🍛 Biryani</div>
+        <div class="cat" data-filter="Chinese">🥡 Chinese</div>
+        <div class="cat" data-filter="Dessert">🍰 Dessert</div>
+        <div class="cat" data-filter="FastFood">🍔 Fast Food</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <!-- simple illustration -->
+      <svg width="220" height="160" viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg">
+        <rect width="220" height="160" rx="16" fill="#fff" stroke="#f0f0f0"/>
+        <g transform="translate(16,16)">
+          <circle cx="40" cy="40" r="28" fill="#ffdede" />
+          <rect x="80" y="20" width="96" height="12" rx="6" fill="#ffe8e8"/>
+          <rect x="80" y="44" width="72" height="10" rx="5" fill="#fff0f0"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <main class="container">
+    <h2 style="margin:8px 0 12px 0">Popular near you</h2>
+
+    <div class="grid" id="list">
+      <!-- sample cards -->
+      <article class="card" data-tags="Biryani,Indian,Hyderabad">
+        <div class="thumb">HYD Biryani</div>
+        <div class="info">
+          <h3>Paradise Biryani</h3>
+          <div class="meta"><span>Hyderabad • Biryani</span><span class="rating">4.5 ★</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="Pizza,Italian">
+        <div class="thumb">Pizza</div>
+        <div class="info">
+          <h3>Pizzaro</h3>
+          <div class="meta"><span>2.1 km • Pizza</span><span class="rating">4.2 ★</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="Chinese,FastFood">
+        <div class="thumb">Noodles</div>
+        <div class="info">
+          <h3>Dragon Wok</h3>
+          <div class="meta"><span>1.6 km • Chinese</span><span class="rating">4.1 ★</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="Dessert,IceCream">
+        <div class="thumb">Sweets</div>
+        <div class="info">
+          <h3>Sweet Tooth</h3>
+          <div class="meta"><span>0.8 km • Desserts</span><span class="rating">4.7 ★</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="FastFood,Burgers">
+        <div class="thumb">Burger</div>
+        <div class="info">
+          <h3>Burger Hub</h3>
+          <div class="meta"><span>3.2 km • Burgers</span><span class="rating">4.0 ★</span></div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    Built with ❤️ — This is a simple mockup for learning HTML/CSS. Copy the code and open as <code>index.html</code> in your browser.
+  </footer>
+
+  <script>
+    // tiny interactivity: search + category filter (client-side)
+    const input = document.getElementById('searchInput');
+    const list = [...document.querySelectorAll('#list .card')];
+    const cats = document.querySelectorAll('.cat');
+
+    function filter(term){
+      const q = term.trim().toLowerCase();
+      list.forEach(card=>{
+        const text = (card.innerText + ' ' + card.dataset.tags).toLowerCase();
+        card.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+
+    input.addEventListener('input', e => filter(e.target.value));
+    cats.forEach(c=>c.addEventListener('click', ()=>{
+      const f = c.dataset.filter;
+      input.value = f;
+      filter(f);
+    }));
+  </script>
+</body>
+</html>
